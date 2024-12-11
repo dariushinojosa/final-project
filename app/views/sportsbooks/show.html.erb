@@ -1,0 +1,71 @@
+<div>
+  <div>
+    <h1>
+      Sportsbook #<%= @the_sportsbook.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/sportsbooks">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_sportsbook/<%= @the_sportsbook.id %>">
+          Delete sportsbook
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_sportsbook.name %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_sportsbook.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_sportsbook.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit sportsbook
+    </h2>
+
+    <form action="/modify_sportsbook/<%= @the_sportsbook.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_sportsbook.name %>">
+      </div>
+
+      <button>
+        Update sportsbook
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

@@ -1,0 +1,131 @@
+<div>
+  <div>
+    <h1>
+      Bet #<%= @the_bet.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/bets">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_bet/<%= @the_bet.id %>">
+          Delete bet
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_bet.name %>
+      </dd>
+
+      <dt>
+        Event
+      </dt>
+      <dd>
+        <%= @the_bet.event_id %>
+      </dd>
+
+      <dt>
+        Sportsbook
+      </dt>
+      <dd>
+        <%= @the_bet.sportsbook %>
+      </dd>
+
+      <dt>
+        Odds
+      </dt>
+      <dd>
+        <%= @the_bet.odds %>
+      </dd>
+
+      <dt>
+        Status
+      </dt>
+      <dd>
+        <%= @the_bet.status %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_bet.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_bet.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit bet
+    </h2>
+
+    <form action="/modify_bet/<%= @the_bet.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_bet.name %>">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_bet.event_id %>">
+      </div>
+
+      <div>
+        <label for="sportsbook_box">
+          Sportsbook
+        </label>
+
+        <input type="text" id="sportsbook_box" name="query_sportsbook" value="<%= @the_bet.sportsbook %>">
+      </div>
+
+      <div>
+        <label for="odds_box">
+          Odds
+        </label>
+
+        <input type="text" id="odds_box" name="query_odds" value="<%= @the_bet.odds %>">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status" value="<%= @the_bet.status %>">
+      </div>
+
+      <button>
+        Update bet
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

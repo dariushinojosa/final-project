@@ -1,0 +1,150 @@
+<div>
+  <div>
+    <h1>
+      List of all bets
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new bet
+    </h2>
+
+    <form action="/insert_bet" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="event_id_box">
+          Event
+        </label>
+
+        <input type="text" id="event_id_box" name="query_event_id">
+      </div>
+
+      <div>
+        <label for="sportsbook_box">
+          Sportsbook
+        </label>
+
+        <input type="text" id="sportsbook_box" name="query_sportsbook">
+      </div>
+
+      <div>
+        <label for="odds_box">
+          Odds
+        </label>
+
+        <input type="text" id="odds_box" name="query_odds">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status">
+      </div>
+
+      <button>
+        Create bet
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Event
+        </th>
+
+        <th>
+          Sportsbook
+        </th>
+
+        <th>
+          Odds
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_bets.each do |a_bet| %>
+      <tr>
+        <td>
+          <%= a_bet.id %>
+        </td>
+
+        <td>
+          <%= a_bet.name %>
+        </td>
+
+        <td>
+          <%= a_bet.event_id %>
+        </td>
+
+        <td>
+          <%= a_bet.sportsbook %>
+        </td>
+
+        <td>
+          <%= a_bet.odds %>
+        </td>
+
+        <td>
+          <%= a_bet.status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_bet.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_bet.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/bets/<%= a_bet.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

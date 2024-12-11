@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      List of all sports
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new sport
+    </h2>
+
+    <form action="/insert_sport" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <button>
+        Create sport
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_sports.each do |a_sport| %>
+      <tr>
+        <td>
+          <%= a_sport.id %>
+        </td>
+
+        <td>
+          <%= a_sport.name %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_sport.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_sport.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/sports/<%= a_sport.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
