@@ -79,11 +79,15 @@
       </div>
 
       <div>
-        <label for="status_box">
+        <label for="status_menu">
           Status
         </label>
-
-        <input type="text" id="status_box" name="query_status">
+        <select id="status_menu" name="query_status">
+          <option value="">Select a status</option>
+        <% Bet::VALID_STATUSES.each do |status| %>
+        <option value="<%= status %>"><%= status.humanize %></option>
+      <% end %>
+        </select>
       </div>
 
       <button>

@@ -13,7 +13,9 @@
 #  sportsbook_id :integer
 #
 class Bet < ApplicationRecord
+  VALID_STATUSES = ["placed", "not_placed", "won", "lost"]
   belongs_to(:sportsbook)
   belongs_to(:event)
   has_one(:sport, through: :event)  
+  validates :status, presence: true, inclusion: { in: VALID_STATUSES }
 end
