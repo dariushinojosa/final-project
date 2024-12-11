@@ -17,21 +17,24 @@ class BetsController < ApplicationController
     render({ :template => "bets/show" })
   end
 
-  #def new
-   # @bet = Bet.new
-   
-  #@sports = Sport.all
-   # @sport = Sport.new
- 
- # end
+  def create1
+    @the_sportsbook = params.fetch("query_sportsbook_id")
+    @the_sport = params.fetch("query_sport_id")
+    if @the_sportsbook.blank? || @the_sport.blank?
+      redirect_to("/bets", { alert: "Please select a sportsbook and a sport." })
+    else
+      redirect_to("/bets/?query_sportsbook_id=#{@the_sportsbook}&query_sport_id=#{@the_sport}")
+    end
+  end
 
-  def create
+  def create2
     the_bet = Bet.new
     the_bet.name = params.fetch("query_name")
     the_bet.event_id = params.fetch("query_event_id")
-    the_bet.sportsbook = params.fetch("query_sportsbook")
+    the_bet.sportsbook_id = params.fetch("query_sportsbook_id")
     the_bet.odds = params.fetch("query_odds")
     the_bet.status = params.fetch("query_status")
+    the_bet.stake = params.fetch("query_stake")
 
     if the_bet.valid?
       the_bet.save

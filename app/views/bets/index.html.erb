@@ -12,10 +12,11 @@
   <div>
     <h2>Add a new bet</h2>
 
-    <form action="/insert_bet" method="post">
+<% if params[:query_sport_id].blank? %>
+<form action="/insert_bet1" method="post">
       <div>
         <label for="sportsbook_id">Sportsbook</label>
-        <select id="sportsbook_id" name="sportsbook_id">
+        <select id="sportsbook_id" name="query_sportsbook_id">
           <option value="">Select an existing sportsbook</option>
           <% Sportsbook.all.each do |sportsbook| %>
             <option value="<%= sportsbook.id %>"><%= sportsbook.name %></option>
@@ -26,13 +27,36 @@
 
       <div>
         <label for="sport_id">Sport</label>
-        <select id="sport_id" name="sport_id">
+        <select id="sport_id" name="query_sport_id">
           <option value="">Select an existing sport</option>
           <% Sport.all.each do |sport| %>
             <option value="<%= sport.id %>"><%= sport.name %></option>
           <% end %>
         </select>
         <p>... or click <a href="/sports">here</a> to create a new one</p>
+      </div>
+      <button>
+        Next
+      </button>
+      </form>
+
+      <% else %>
+      <div>Sportsbook: <%= Sportsbook.find(params[:query_sportsbook_id]).name %></div>
+      <div>Sport: <%= Sport.find(params[:query_sport_id]).name %></div>
+      <form action="/insert_bet2" method="post">
+
+        <input type="hidden" name="query_sportsbook_id" value="<%= params[:query_sportsbook_id] %>">
+        <input type="hidden" name="query_sport_id" value="<%= params[:query_sport_id] %>">
+        
+        <div>
+        <label for="event_id">Event</label>
+        <select id="event_id" name="query_event_id">
+          <option value="">Select an existing event</option>
+          <% Event.where(sport_id: params[:query_sport_id]).each do |event| %>
+            <option value="<%= event.id %>"><%= event.name %></option>
+          <% end %>
+        </select>
+        <p>... or click <a href="/events">here</a> to create a new one</p>
       </div>
 
       <div>
@@ -41,16 +65,17 @@
       </div>
 
       <div>
-        <label for="event_id_box">Event</label>
-        <input type="text" id="event_id_box" name="query_event_id">
-      </div>
-
-      <div>
         <label for="odds_box">
           Odds
         </label>
-
         <input type="text" id="odds_box" name="query_odds">
+      </div>
+
+      <div>
+        <label for="stake_box">
+          Stake
+        </label>
+        <input type="text" id="stake_box" name="query_stake">
       </div>
 
       <div>
@@ -65,6 +90,7 @@
         Create bet
       </button>
     </form>
+    <% end %>
   </div>
 </div>
 

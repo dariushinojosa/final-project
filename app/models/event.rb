@@ -6,6 +6,7 @@
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  sport_id   :integer
 #
 class Event < ApplicationRecord
   belongs_to(:sport)

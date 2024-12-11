@@ -20,6 +20,7 @@ class EventsController < ApplicationController
   def create
     the_event = Event.new
     the_event.name = params.fetch("query_name")
+    the_event.sport_id = params.fetch("query_sport_id")
 
     if the_event.valid?
       the_event.save

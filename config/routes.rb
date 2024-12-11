@@ -63,7 +63,8 @@ Rails.application.routes.draw do
   # Routes for the Bet resource:
 
   # CREATE
-  post("/insert_bet", { :controller => "bets", :action => "create" })
+  post("/insert_bet1", { :controller => "bets", :action => "create1" })
+  post("/insert_bet2", { :controller => "bets", :action => "create2" })
           
   # READ
   get("/bets", { :controller => "bets", :action => "index" })

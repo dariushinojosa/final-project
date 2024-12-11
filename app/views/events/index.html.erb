@@ -16,6 +16,16 @@
 
     <form action="/insert_event" method="post">
       <div>
+        <label for="sport_id">Sport</label>
+        <select id="sport_id" name="query_sport_id">
+          <option value="">Select an existing sport</option>
+          <% Sport.all.each do |sport| %>
+            <option value="<%= sport.id %>"><%= sport.name %></option>
+          <% end %>
+        </select>
+        <p>... or click <a href="/sports">here</a> to create a new one</p>
+      </div>
+      <div>
         <label for="name_box">
           Name
         </label>
