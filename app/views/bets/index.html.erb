@@ -10,33 +10,39 @@
 
 <div>
   <div>
-    <h2>
-      Add a new bet
-    </h2>
+    <h2>Add a new bet</h2>
 
     <form action="/insert_bet" method="post">
       <div>
-        <label for="name_box">
-          Name
-        </label>
+        <label for="sportsbook_id">Sportsbook</label>
+        <select id="sportsbook_id" name="sportsbook_id">
+          <option value="">Select an existing sportsbook</option>
+          <% Sportsbook.all.each do |sportsbook| %>
+            <option value="<%= sportsbook.id %>"><%= sportsbook.name %></option>
+          <% end %>
+        </select>
+        <p>... or click <a href="/sportsbooks">here</a> to create a new one</p>
+      </div>
 
+      <div>
+        <label for="sport_id">Sport</label>
+        <select id="sport_id" name="sport_id">
+          <option value="">Select an existing sport</option>
+          <% Sport.all.each do |sport| %>
+            <option value="<%= sport.id %>"><%= sport.name %></option>
+          <% end %>
+        </select>
+        <p>... or click <a href="/sports">here</a> to create a new one</p>
+      </div>
+
+      <div>
+        <label for="name_box">Name</label>
         <input type="text" id="name_box" name="query_name">
       </div>
 
       <div>
-        <label for="event_id_box">
-          Event
-        </label>
-
+        <label for="event_id_box">Event</label>
         <input type="text" id="event_id_box" name="query_event_id">
-      </div>
-
-      <div>
-        <label for="sportsbook_box">
-          Sportsbook
-        </label>
-
-        <input type="text" id="sportsbook_box" name="query_sportsbook">
       </div>
 
       <div>

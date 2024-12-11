@@ -17,6 +17,14 @@ class BetsController < ApplicationController
     render({ :template => "bets/show" })
   end
 
+  #def new
+   # @bet = Bet.new
+   
+  #@sports = Sport.all
+   # @sport = Sport.new
+ 
+ # end
+
   def create
     the_bet = Bet.new
     the_bet.name = params.fetch("query_name")
