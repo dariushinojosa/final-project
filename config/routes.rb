@@ -65,7 +65,8 @@ Rails.application.routes.draw do
   # CREATE
   post("/insert_bet1", { :controller => "bets", :action => "create1" })
   post("/insert_bet2", { :controller => "bets", :action => "create2" })
-          
+  post("/insert_bet3", { :controller => "bets", :action => "create3" })
+
   # READ
   get("/bets", { :controller => "bets", :action => "index" })
   

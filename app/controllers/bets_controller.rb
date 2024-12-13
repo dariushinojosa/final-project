@@ -18,24 +18,37 @@ class BetsController < ApplicationController
   end
 
   def create1
-    @the_sportsbook = params.fetch("query_sportsbook_id")
-    @the_sport = params.fetch("query_sport_id")
-    if @the_sportsbook.blank? || @the_sport.blank?
+    sportsbook = params.fetch("query_sportsbook_id")
+    sport = params.fetch("query_sport_id")
+    if sportsbook.blank? || sport.blank?
       redirect_to("/bets", { alert: "Please select a sportsbook and a sport." })
     else
-      redirect_to("/bets/?query_sportsbook_id=#{@the_sportsbook}&query_sport_id=#{@the_sport}")
+      redirect_to("/bets/?query_sportsbook_id=#{sportsbook}&query_sport_id=#{sport}")
     end
   end
 
   def create2
+    sportsbook = params.fetch("query_sportsbook_id")
+    sport = params.fetch("query_sport_id")
+    event_id = params.fetch("query_event_id")
+    name = params.fetch("query_name")
+    odds = params.fetch("query_odds") # VALIDATE
+    stake = params.fetch("query_stake")
+    if event_id.blank? || name.blank? || odds.blank? || stake.blank?
+      redirect_to("/bets", { alert: "Please fill all inputs." })
+    else
+      redirect_to("/bets/?query_sportsbook_id=#{sportsbook}&query_sport_id=#{sport}&query_event_id=#{event_id}&query_name=#{name}&query_odds=#{odds}&query_stake=#{stake}")
+    end
+  end
+
+  def create3
     the_bet = Bet.new
     the_bet.name = params.fetch("query_name")
     the_bet.event_id = params.fetch("query_event_id")
     the_bet.sportsbook_id = params.fetch("query_sportsbook_id")
     the_bet.odds = params.fetch("query_odds")
-    the_bet.status = params.fetch("query_status")
     the_bet.stake = params.fetch("query_stake")
-
+    the_bet.status = params.fetch("query_status")
     if the_bet.valid?
       the_bet.save
       redirect_to("/bets", { :notice => "Bet created successfully." })
