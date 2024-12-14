@@ -31,6 +31,9 @@
 </div>
 
 <hr>
+    <h2>
+      Performance by sportsbook
+    </h2>
 <div>
   <div>
     <table border="1">
@@ -47,13 +50,14 @@
 
       <% @list_of_sportsbooks.each do |a_sportsbook| %>
       <tr>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
-        <td><%= a_sport.name %></td>
+        <% bets = Bet.where(sportsbook_id: a_sportsbook.id) %>
+        <td><%= a_sportsbook.name %></td>
+        <td><%= bets.count %></td>
+        <td><%= Bet.count_by_status(bets, "won") %></td>
+        <td><%= Bet.count_by_status(bets, "lost") %></td>
+        <td><%= Bet.count_by_status(bets, "pending") %></td>
+        <td>$ <%= Bet.total_balance(bets).round(2) %></td>
+        <td><%= Bet.total_yield(bets).round(1) %> % </td>
         <td>
           <a href="/sportsbooks/<%= a_sportsbook.id %>">
             Show details

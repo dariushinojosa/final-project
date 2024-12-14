@@ -62,8 +62,6 @@ class BetsController < ApplicationController
     the_bet = Bet.where({ :id => the_id }).at(0)
 
     the_bet.name = params.fetch("query_name")
-    the_bet.event_id = params.fetch("query_event_id")
-    the_bet.sportsbook = params.fetch("query_sportsbook")
     the_bet.odds = params.fetch("query_odds")
     the_bet.status = params.fetch("query_status")
 

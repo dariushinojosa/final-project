@@ -1,8 +1,11 @@
 <div>
   <div>
     <h1>
-      Bet #<%= @the_bet.id %> details
+      <%= @the_bet.name %>
     </h1>
+    <h2>
+      at <%= @the_bet.event.name %> 
+    </h2>
 
     <div>
       <div>
@@ -19,25 +22,12 @@
     </div>
 
     <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_bet.name %>
-      </dd>
-
-      <dt>
-        Event
-      </dt>
-      <dd>
-        <%= @the_bet.event_id %>
-      </dd>
 
       <dt>
         Sportsbook
       </dt>
       <dd>
-        <%= @the_bet.sportsbook %>
+        <%= @the_bet.sportsbook.name %>
       </dd>
 
       <dt>
@@ -90,22 +80,6 @@
       </div>
 
       <div>
-        <label for="event_id_box">
-          Event
-        </label>
-
-        <input type="text" id="event_id_box" name="query_event_id" value="<%= @the_bet.event_id %>">
-      </div>
-
-      <div>
-        <label for="sportsbook_box">
-          Sportsbook
-        </label>
-
-        <input type="text" id="sportsbook_box" name="query_sportsbook" value="<%= @the_bet.sportsbook %>">
-      </div>
-
-      <div>
         <label for="odds_box">
           Odds
         </label>
@@ -114,11 +88,15 @@
       </div>
 
       <div>
-        <label for="status_box">
+        <label for="status_menu">
           Status
         </label>
-
-        <input type="text" id="status_box" name="query_status" value="<%= @the_bet.status %>">
+        <select id="status_menu" name="query_status">
+          <option value="">Select a status</option>
+        <% Bet::VALID_STATUSES.each do |status| %>
+        <option value="<%= status %>"><%= status.humanize %></option>
+      <% end %>
+        </select>
       </div>
 
       <button>

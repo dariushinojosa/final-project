@@ -98,11 +98,11 @@
       <div>Event: <%= Event.find(params[:query_event_id]).name %></div>
       <div>Name: <%= params[:query_name] %></div>
       <div>Odds: <%= params[:query_odds] %></div>
-      <div>Stake: <%= params[:query_stake] %></div>
+      <div>Stake: $ <%= params[:query_stake] %></div>
       <hr>
-      <div>Implied Odds: <%= implied_odds %></div>
-      <div>Pontential Payout: $<%= payout %></div>
-      <div>Yield: <%= yield_roi %>%</div>
+      <div>Implied Probability: <%= (100*implied_odds).round(2) %> % </div>
+      <div>Pontential Payout: $ <%= payout %></div>
+      <div>Yield: <%= yield_roi %> %</div>
       <hr>
       <form action="/insert_bet3" method="post">
 
@@ -134,13 +134,13 @@
 
 <hr>
    <h2>Your performance</h2>
-   <% balance = Bet.payout.sum %>
-   <div>Total Balance: <%= balance %></div>
-   <div>Yield: <%= 100*balance/Bet.where(status != "Pending").stake.sum %>%
-   <div>Bets Placed: <%= Bet.where(status: != "Not Placed").count %></div>
-   <div>Bets Won: <%= <%= Bet.where(status: "Won").count %></div>
-   <div>Bets Lost: <%= S<%= Bet.where(status: "Lost").count %></div>
-   <div>Bets Pending: <%= Bet.where(status: "Pending").count %></div>
+   <% bets = Bet.all %>
+   <div>Total Balance: $ <%= Bet.total_balance(bets).round(2) %></div>
+   <div>Yield: <%= Bet.total_yield(bets).round(1) %> % </div>
+   <div>Bets Placed: <%= Bet.count %></div>
+   <div>Bets Won: <%= Bet.count_by_status(bets, "won") %></div>
+   <div>Bets Lost: <%= Bet.count_by_status(bets, "lost") %></div>
+   <div>Bets Pending: <%= Bet.count_by_status(bets, "pending") %></div>
 
 <hr>
 <h2>All your bets</h2>
@@ -154,6 +154,7 @@
         <th>Name</th>
         <th>Sportsbook</th>
         <th>Odds</th>
+        <th>Stake</th>
         <th>Status</th>
         <th>Payout</th>
         <th>Created at</th>
@@ -184,11 +185,15 @@
         </td>
 
         <td>
-          <%= a_bet.status %>
+          $ <%= a_bet.stake %>
         </td>
 
         <td>
-          PAYOUT
+          <%= a_bet.status.humanize %>
+        </td>
+
+        <td>
+          $ <%= a_bet.payout.round(2) %>
         </td>
 
         <td>
