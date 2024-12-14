@@ -10,9 +10,7 @@
 
 <div>
   <div>
-    <h2>
-      Add a new event
-    </h2>
+    <h2>Add a new event</h2>
 
     <form action="/insert_event" method="post">
       <div>
@@ -23,14 +21,19 @@
             <option value="<%= sport.id %>"><%= sport.name %></option>
           <% end %>
         </select>
-        <p>... or click <a href="/sports">here</a> to create a new one</p>
+        <div>... or click <a href="/sports">here</a> to create a new one</div>
       </div>
       <div>
         <label for="name_box">
           Name
         </label>
-
         <input type="text" id="name_box" name="query_name">
+      </div>
+      <div>
+        <label for="date_box">
+          Name
+        </label>
+        <input type="date" id="date_box" name="query_date">
       </div>
 
       <button>
@@ -41,7 +44,8 @@
 </div>
 
 <hr>
-<h2>Upcoming Events<h2>U
+<h2>Upcoming Events</h2>
+
 <div>
   <div>
     <table border="1">
@@ -54,14 +58,15 @@
         <th>Potential Payout</th>
         <th></th>
       </tr>
-
-      <% @list_of_events.each do |an_event| %>
+      <% @list_of_events.where("date >= ?", Date.today).each do |an_event| %>
       <tr>
         <td> <%= an_event.sport.name %> </td>
         <td> <%= an_event.name %> </td>
-        <td> <%= an_event.name %> </td>
-        <td> <%= Bet.where(event_id: an_event.id).stake.sum %> </td>
-        <td> <%= Bet.where(event_id: an_event.id).stake.sum %> </td>
+        <td> <%= an_event.date %> </td>
+        <% event_bets = Bet.where(event_id: an_event.id) %>
+        <td> <%= event_bets.count%> </td>
+        <td>$ <%= Bet.total_stake(event_bets).round(2) %> </td>
+        <td>$ <%= Bet.total_potential(event_bets).round(2) %> </td>
         <td>
           <a href="/events/<%= an_event.id %>">
             Show details
@@ -74,7 +79,7 @@
 </div>
 
 <hr>
-<h2>Past Events<h2>
+<h2>Past Events</h2>
 <div>
   <div>
     <table border="1">
@@ -90,15 +95,17 @@
         <th></th>
 
       </tr>
-      <% @list_of_events.each do |an_event| %>
+      <% @list_of_events.where("date < ?", Date.today).each do |an_event| %>
       <tr>
         <td> <%= an_event.sport.name %> </td>
         <td> <%= an_event.name %> </td>
-        <td> <%= an_event.name %> </td>
-        <td>Total</td>
-        <td>Won</td>
-        <td>Lost</td>
-        <td>Pending</td>
+        <td> <%= an_event.date %> </td>
+        <% event_bets = Bet.where(event_id: an_event.id) %>
+        <td> <%= event_bets.count%> </td>
+        <td> <%= Bet.count_by_status(event_bets, "won") %> </td>
+        <td> <%= Bet.count_by_status(event_bets, "lost") %> </td>
+        <td> <%= Bet.count_by_status(event_bets, "pending") %> </td>
+        <td>$ <%= Bet.total_balance(event_bets).round(2) %> </td>
         <td>
           <a href="/events/<%= an_event.id %>">
             Show details
@@ -107,5 +114,7 @@
       </tr>
       <% end %>
     </table>
+  </div>
+</div>
 
 <hr>

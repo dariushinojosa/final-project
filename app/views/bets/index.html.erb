@@ -20,7 +20,7 @@
             <option value="<%= sportsbook.id %>"><%= sportsbook.name %></option>
           <% end %>
         </select>
-        <p>... or click <a href="/sportsbooks">here</a> to create a new one</p>
+        <div>... or click <a href="/sportsbooks">here</a> to create a new one</div>
       </div>
 
       <div>
@@ -31,7 +31,7 @@
             <option value="<%= sport.id %>"><%= sport.name %></option>
           <% end %>
         </select>
-        <p>... or click <a href="/sports">here</a> to create a new one</p>
+        <div>... or click <a href="/sports">here</a> to create a new one</div>
       </div>
       <button>
         Next
@@ -39,8 +39,8 @@
       </form>
 
       <% elsif params[:query_event_id].blank? %>
-      <div>Sportsbook: <%= Sportsbook.find(params[:query_sportsbook_id]).name %></div>
-      <div>Sport: <%= Sport.find(params[:query_sport_id]).name %></div>
+      <div>Sportsbook: <strong> <%= Sportsbook.find(params[:query_sportsbook_id]).name %></strong></div>
+      <div>Sport: <strong> <%= Sport.find(params[:query_sport_id]).name %></strong></div>
       <form action="/insert_bet2" method="post">
 
         <input type="hidden" name="query_sportsbook_id" value="<%= params[:query_sportsbook_id] %>">
@@ -54,7 +54,7 @@
             <option value="<%= event.id %>"><%= event.name %></option>
           <% end %>
         </select>
-        <p>... or click <a href="/events">here</a> to create a new one</p>
+        <div>... or click <a href="/events">here</a> to create a new one</div>
       </div>
 
       <div>
@@ -93,16 +93,16 @@
     <% end %>
     <% yield_roi = 100*payout/stake %>
 
-      <div>Sportsbook: <%= Sportsbook.find(params[:query_sportsbook_id]).name %></div>
-      <div>Sport: <%= Sport.find(params[:query_sport_id]).name %></div>
-      <div>Event: <%= Event.find(params[:query_event_id]).name %></div>
-      <div>Name: <%= params[:query_name] %></div>
-      <div>Odds: <%= params[:query_odds] %></div>
-      <div>Stake: $ <%= params[:query_stake] %></div>
+      <div>Sportsbook: <strong> <%= Sportsbook.find(params[:query_sportsbook_id]).name %></strong> </div>
+      <div>Sport: <strong> <%= Sport.find(params[:query_sport_id]).name %></strong> </div>
+      <div>Event: <strong> <%= Event.find(params[:query_event_id]).name %></strong> </div>
+      <div>Name: <strong> <%= params[:query_name] %></strong> </div>
+      <div>Odds: <strong> <%= params[:query_odds] %></strong> </div>
+      <div>Stake: <strong> $ <%= params[:query_stake] %> </strong></div>
       <hr>
-      <div>Implied Probability: <%= (100*implied_odds).round(2) %> % </div>
-      <div>Pontential Payout: $ <%= payout %></div>
-      <div>Yield: <%= yield_roi %> %</div>
+      <div>Implied Probability: <strong> <%= (100*implied_odds).round(2) %> % </strong> </div>
+      <div>Pontential Payout: <strong>$ <%= payout %></strong></div>
+      <div>Yield: <strong><%= yield_roi %> %</strong> </div>
       <hr>
       <form action="/insert_bet3" method="post">
 
@@ -133,14 +133,15 @@
 </div>
 
 <hr>
-   <h2>Your performance</h2>
+
+<h2>Your performance</h2>
    <% bets = Bet.all %>
-   <div>Total Balance: $ <%= Bet.total_balance(bets).round(2) %></div>
-   <div>Yield: <%= Bet.total_yield(bets).round(1) %> % </div>
-   <div>Bets Placed: <%= Bet.count %></div>
-   <div>Bets Won: <%= Bet.count_by_status(bets, "won") %></div>
-   <div>Bets Lost: <%= Bet.count_by_status(bets, "lost") %></div>
-   <div>Bets Pending: <%= Bet.count_by_status(bets, "pending") %></div>
+   <div>Total Balance: <strong>$ <%= Bet.total_balance(bets).round(2) %></strong> </div>
+   <div>Yield: <strong><%= Bet.total_yield(bets).round(1) %> %</strong> </div>
+   <div>Bets Placed: <strong><%= Bet.count %></strong> </div>
+   <div>Bets Won: <strong><%= Bet.count_by_status(bets, "won") %></strong></div>
+   <div>Bets Lost: <strong><%= Bet.count_by_status(bets, "lost") %></strong> </div>
+   <div>Bets Pending: <strong><%= Bet.count_by_status(bets, "pending") %></strong></div>
 
 <hr>
 <h2>All your bets</h2>

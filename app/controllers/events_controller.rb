@@ -21,6 +21,7 @@ class EventsController < ApplicationController
     the_event = Event.new
     the_event.name = params.fetch("query_name")
     the_event.sport_id = params.fetch("query_sport_id")
+    the_event.date = params.fetch("query_date")
 
     if the_event.valid?
       the_event.save
@@ -33,8 +34,9 @@ class EventsController < ApplicationController
   def update
     the_id = params.fetch("path_id")
     the_event = Event.where({ :id => the_id }).at(0)
-
+        
     the_event.name = params.fetch("query_name")
+    the_event.date = params.fetch("query_date")
 
     if the_event.valid?
       the_event.save
