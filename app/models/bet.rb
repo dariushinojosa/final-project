@@ -31,7 +31,7 @@ class Bet < ApplicationRecord
     if status == "won"
       potential_payout
     elsif status == "lost"
-      -stake
+      -stake.to_f
     else
       0
     end

@@ -65,16 +65,16 @@
 
       <div>
         <label for="odds_box">
-          Odds
+          Odds (American-style)
         </label>
-        <input type="text" id="odds_box" name="query_odds">
+        <input type="number" id="odds_box" name="query_odds">
       </div>
 
       <div>
         <label for="stake_box">
           Stake
         </label>
-        <input type="text" id="stake_box" name="query_stake">
+        <input type="number" id="stake_box" name="query_stake">
       </div>
     <button>
         Next
@@ -172,7 +172,11 @@
         <td><%= a_bet.odds %></td>
         <td>$ <%= a_bet.stake %></td>
         <td><%= a_bet.status.humanize %></td>
+        <% if a_bet.payout == 0%>
+        <td>-</td>
+        <% else %>
         <td>$ <%= a_bet.payout.round(2) %></td>
+        <% end %>
         <td><%= time_ago_in_words(a_bet.created_at) %> ago</td>
 
         <td>

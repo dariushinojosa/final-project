@@ -1,4 +1,5 @@
 class BetsController < ApplicationController
+  
   def index
     matching_bets = Bet.all
 
@@ -46,8 +47,8 @@ class BetsController < ApplicationController
     the_bet.name = params.fetch("query_name")
     the_bet.event_id = params.fetch("query_event_id")
     the_bet.sportsbook_id = params.fetch("query_sportsbook_id")
-    the_bet.odds = params.fetch("query_odds")
-    the_bet.stake = params.fetch("query_stake")
+    the_bet.odds = params.fetch("query_odds").to_f
+    the_bet.stake = params.fetch("query_stake").to_f
     the_bet.status = params.fetch("query_status")
     if the_bet.valid?
       the_bet.save
@@ -62,8 +63,9 @@ class BetsController < ApplicationController
     the_bet = Bet.where({ :id => the_id }).at(0)
 
     the_bet.name = params.fetch("query_name")
-    the_bet.odds = params.fetch("query_odds")
+    the_bet.odds = params.fetch("query_odds").to_f
     the_bet.status = params.fetch("query_status")
+    the_bet.stake = params.fetch("query_stake").to_f
 
     if the_bet.valid?
       the_bet.save
