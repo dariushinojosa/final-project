@@ -45,6 +45,14 @@ class Bet < ApplicationRecord
     end
   end
 
+  def potential_yield
+    100.0 * potential_payout / stake
+  end
+
+  def yield_roi
+    100.0 * payout / stake
+  end
+
   def self.total_balance(query)
     query.to_a.sum(&:payout)
   end
@@ -65,7 +73,7 @@ class Bet < ApplicationRecord
     if total_stake(query) == 0
       0
     else
-      total_balance(query) * 100 / total_stake(query)
+      total_balance(query) * 100.0 / total_stake(query)
     end
   end
 

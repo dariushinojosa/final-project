@@ -20,45 +20,23 @@
         </a>
       </div>
     </div>
+<hr>
+<div>Sportsbook: <strong> <%= @the_bet.sportsbook.name %> </strong> </div>
+<div>Odds: <strong> <%= @the_bet.odds %> </strong> </div>
+<div>Stake: <strong> <%= @the_bet.stake %> </strong> </div>
+<div>Created at: <strong> <%= time_ago_in_words(@the_bet.created_at) %> ago </strong> </div>
+<hr>
+<div>Status: <strong> <%= @the_bet.status.humanize %> </strong> </div>
+<% if @the_bet.status == "pending"%>
+<div>Implied Probability: <strong> <%= (100*@the_bet.implied_odds).round(1) %> %</strong> </div>
+<div>Potential Payout: <strong> $ <%= @the_bet.potential_payout.round(2) %> </strong> </div>
+<div>Potential Yield: <strong> <%= @the_bet.potential_yield.round(1) %> %</strong> </div>
+<% else %>
+<div>Payout: <strong> $ <%= @the_bet.payout.round(2) %> </strong> </div>
+<div>Yield: <strong> <%= @the_bet.yield_roi.round(1) %> %</strong> </div>
+<% end %>
 
-    <dl>
-
-      <dt>
-        Sportsbook
-      </dt>
-      <dd>
-        <%= @the_bet.sportsbook.name %>
-      </dd>
-
-      <dt>
-        Odds
-      </dt>
-      <dd>
-        <%= @the_bet.odds %>
-      </dd>
-
-      <dt>
-        Status
-      </dt>
-      <dd>
-        <%= @the_bet.status %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_bet.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_bet.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
+</div>
 </div>
 
 <hr>

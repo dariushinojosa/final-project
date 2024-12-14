@@ -48,8 +48,56 @@
 <hr>
 
 <h2>Your Performance</h2>
+
+<% bets = Bet.where(sportsbook: @the_sportsbook.id) %>
+   <div>Total Balance: <strong>$ <%= Bet.total_balance(bets).round(2) %></strong> </div>
+   <div>Yield: <strong><%= Bet.total_yield(bets.where.not(status: 'pending')).round(1) %> %</strong> </div>
+   <div>Bets Placed: <strong><%= Bet.count %></strong> </div>
+   <div>Bets Won: <strong><%= Bet.count_by_status(bets, "won") %></strong></div>
+   <div>Bets Lost: <strong><%= Bet.count_by_status(bets, "lost") %></strong> </div>
+   <div>Bets Pending: <strong><%= Bet.count_by_status(bets, "pending") %></strong></div>
+
 <hr>
 
 <h2>Your Bets</h2>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>Sport</th>
+        <th>Event</th>
+        <th>Name</th>
+        <th>Sportsbook</th>
+        <th>Odds</th>
+        <th>Stake</th>
+        <th>Status</th>
+        <th>Payout</th>
+        <th>Created at</th>
+        <th></th>
+      </tr>
+      <% bets.each do |a_bet| %>
+      <tr>
+        <td><%= a_bet.sport.name %></td>
+        <td><%= a_bet.event.name %></td>
+        <td><%= a_bet.name %></td>
+        <td><%= a_bet.sportsbook.name %> </td>
+        <td><%= a_bet.odds %></td>
+        <td>$ <%= a_bet.stake %></td>
+        <td><%= a_bet.status.humanize %></td>
+        <td>$ <%= a_bet.payout.round(2) %></td>
+        <td><%= time_ago_in_words(a_bet.created_at) %> ago</td>
+
+        <td>
+          <a href="/bets/<%= a_bet.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+
+  </div>
+</div>
 
 <hr>

@@ -41,6 +41,7 @@
       <% elsif params[:query_event_id].blank? %>
       <div>Sportsbook: <strong> <%= Sportsbook.find(params[:query_sportsbook_id]).name %></strong></div>
       <div>Sport: <strong> <%= Sport.find(params[:query_sport_id]).name %></strong></div>
+      <hr>
       <form action="/insert_bet2" method="post">
 
         <input type="hidden" name="query_sportsbook_id" value="<%= params[:query_sportsbook_id] %>">
@@ -85,13 +86,13 @@
     <% odds = params.fetch("query_odds").to_f %>
     <% stake = params.fetch("query_stake").to_f %>
     <% if odds > 99 %>
-    <%   payout = stake*odds/100 %>
-    <%   implied_odds = 100/(odds+100) %>
+    <%   payout = stake*odds/100.0 %>
+    <%   implied_odds = 100.0/(odds+100) %>
     <% elsif odds < -100 %>
-    <%   payout = stake*100/(-odds) %>
-    <%   implied_odds = (-odds)/(100-odds) %>
+    <%   payout = stake*100.0/(-odds) %>
+    <%   implied_odds = (-odds)/(100.0-odds) %>
     <% end %>
-    <% yield_roi = 100*payout/stake %>
+    <% yield_roi = 100.0*payout/stake %>
 
       <div>Sportsbook: <strong> <%= Sportsbook.find(params[:query_sportsbook_id]).name %></strong> </div>
       <div>Sport: <strong> <%= Sport.find(params[:query_sport_id]).name %></strong> </div>
@@ -100,9 +101,9 @@
       <div>Odds: <strong> <%= params[:query_odds] %></strong> </div>
       <div>Stake: <strong> $ <%= params[:query_stake] %> </strong></div>
       <hr>
-      <div>Implied Probability: <strong> <%= (100*implied_odds).round(2) %> % </strong> </div>
-      <div>Pontential Payout: <strong>$ <%= payout %></strong></div>
-      <div>Yield: <strong><%= yield_roi %> %</strong> </div>
+      <div>Implied Probability: <strong> <%= (100*implied_odds).round(1) %> % </strong> </div>
+      <div>Pontential Payout: <strong>$ <%= payout.round(2) %></strong></div>
+      <div>Potential Yield: <strong><%= yield_roi.round(1) %> %</strong> </div>
       <hr>
       <form action="/insert_bet3" method="post">
 
@@ -137,7 +138,7 @@
 <h2>Your performance</h2>
    <% bets = Bet.all %>
    <div>Total Balance: <strong>$ <%= Bet.total_balance(bets).round(2) %></strong> </div>
-   <div>Yield: <strong><%= Bet.total_yield(bets).round(1) %> %</strong> </div>
+   <div>Yield: <strong><%= Bet.total_yield(Bet.where.not(status: 'pending')).round(1) %> %</strong> </div>
    <div>Bets Placed: <strong><%= Bet.count %></strong> </div>
    <div>Bets Won: <strong><%= Bet.count_by_status(bets, "won") %></strong></div>
    <div>Bets Lost: <strong><%= Bet.count_by_status(bets, "lost") %></strong> </div>
@@ -164,42 +165,15 @@
 
       <% @list_of_bets.each do |a_bet| %>
       <tr>
-
-        <td>
-          <%= a_bet.sport.name %>
-        </td>
-
-        <td>
-          <%= a_bet.event.name %>
-        </td>
-
-        <td>
-          <%= a_bet.name %>
-        </td>
-
-        <td>
-          <%= a_bet.sportsbook.name %> 
-        </td>
-
-        <td>
-          <%= a_bet.odds %>
-        </td>
-
-        <td>
-          $ <%= a_bet.stake %>
-        </td>
-
-        <td>
-          <%= a_bet.status.humanize %>
-        </td>
-
-        <td>
-          $ <%= a_bet.payout.round(2) %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_bet.created_at) %> ago
-        </td>
+        <td><%= a_bet.sport.name %></td>
+        <td><%= a_bet.event.name %></td>
+        <td><%= a_bet.name %></td>
+        <td><%= a_bet.sportsbook.name %> </td>
+        <td><%= a_bet.odds %></td>
+        <td>$ <%= a_bet.stake %></td>
+        <td><%= a_bet.status.humanize %></td>
+        <td>$ <%= a_bet.payout.round(2) %></td>
+        <td><%= time_ago_in_words(a_bet.created_at) %> ago</td>
 
         <td>
           <a href="/bets/<%= a_bet.id %>">
