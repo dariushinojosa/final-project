@@ -1,8 +1,6 @@
 <div>
   <div>
-    <h1>
-      List of all bets
-    </h1>
+    <h1>Welcome to SmartBets</h1>
   </div>
 </div>
 
@@ -103,7 +101,7 @@
       <div>Stake: <%= params[:query_stake] %></div>
       <hr>
       <div>Implied Odds: <%= implied_odds %></div>
-      <div>Payout: $<%= payout %></div>
+      <div>Pontential Payout: $<%= payout %></div>
       <div>Yield: <%= yield_roi %>%</div>
       <hr>
       <form action="/insert_bet3" method="post">
@@ -135,50 +133,42 @@
 </div>
 
 <hr>
+   <h2>Your performance</h2>
+   <% balance = Bet.payout.sum %>
+   <div>Total Balance: <%= balance %></div>
+   <div>Yield: <%= 100*balance/Bet.where(status != "Pending").stake.sum %>%
+   <div>Bets Placed: <%= Bet.where(status: != "Not Placed").count %></div>
+   <div>Bets Won: <%= <%= Bet.where(status: "Won").count %></div>
+   <div>Bets Lost: <%= S<%= Bet.where(status: "Lost").count %></div>
+   <div>Bets Pending: <%= Bet.where(status: "Pending").count %></div>
+
+<hr>
+<h2>All your bets</h2>
+
 <div>
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Event
-        </th>
-
-        <th>
-          Sportsbook
-        </th>
-
-        <th>
-          Odds
-        </th>
-
-        <th>
-          Status
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
+        <th>Sport</th>
+        <th>Event</th>
+        <th>Name</th>
+        <th>Sportsbook</th>
+        <th>Odds</th>
+        <th>Status</th>
+        <th>Payout</th>
+        <th>Created at</th>
+        <th></th>
       </tr>
 
       <% @list_of_bets.each do |a_bet| %>
       <tr>
+
         <td>
-          <%= a_bet.id %>
+          <%= a_bet.sport.name %>
+        </td>
+
+        <td>
+          <%= a_bet.event.name %>
         </td>
 
         <td>
@@ -186,11 +176,7 @@
         </td>
 
         <td>
-          <%= a_bet.event_id %>
-        </td>
-
-        <td>
-          <%= a_bet.sportsbook %>
+          <%= a_bet.sportsbook.name %> 
         </td>
 
         <td>
@@ -202,10 +188,11 @@
         </td>
 
         <td>
-          <%= time_ago_in_words(a_bet.created_at) %> ago
+          PAYOUT
         </td>
+
         <td>
-          <%= time_ago_in_words(a_bet.updated_at) %> ago
+          <%= time_ago_in_words(a_bet.created_at) %> ago
         </td>
 
         <td>

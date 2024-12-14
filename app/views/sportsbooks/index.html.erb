@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all sportsbooks
+      Your Sportsbooks
     </h1>
   </div>
 </div>
@@ -24,7 +24,7 @@
       </div>
 
       <button>
-        Create sportsbook
+        Add sportsbook
       </button>
     </form>
   </div>
@@ -35,43 +35,25 @@
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
+        <th>Name</th>
+        <th>Bets Placed</th>
+        <th>Bets Won</th>
+        <th>Bets Lost</th>
+        <th>Bets Pending</th>
+        <th>Balance</th>
+        <th>Yield</th>
+        <th></th>
       </tr>
 
       <% @list_of_sportsbooks.each do |a_sportsbook| %>
       <tr>
-        <td>
-          <%= a_sportsbook.id %>
-        </td>
-
-        <td>
-          <%= a_sportsbook.name %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_sportsbook.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_sportsbook.updated_at) %> ago
-        </td>
-
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
+        <td><%= a_sport.name %></td>
         <td>
           <a href="/sportsbooks/<%= a_sportsbook.id %>">
             Show details

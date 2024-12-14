@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all events
+      Your Events
     </h1>
   </div>
 </div>
@@ -34,54 +34,34 @@
       </div>
 
       <button>
-        Create event
+        Add event
       </button>
     </form>
   </div>
 </div>
 
 <hr>
+<h2>Upcoming Events<h2>U
 <div>
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Name
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
+        <th>Sport</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Bets Placed</th>
+        <th>Total Stake</th>
+        <th>Potential Payout</th>
+        <th></th>
       </tr>
 
       <% @list_of_events.each do |an_event| %>
       <tr>
-        <td>
-          <%= an_event.id %>
-        </td>
-
-        <td>
-          <%= an_event.name %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(an_event.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(an_event.updated_at) %> ago
-        </td>
-
+        <td> <%= an_event.sport.name %> </td>
+        <td> <%= an_event.name %> </td>
+        <td> <%= an_event.name %> </td>
+        <td> <%= Bet.where(event_id: an_event.id).stake.sum %> </td>
+        <td> <%= Bet.where(event_id: an_event.id).stake.sum %> </td>
         <td>
           <a href="/events/<%= an_event.id %>">
             Show details
@@ -92,5 +72,40 @@
     </table>
   </div>
 </div>
+
+<hr>
+<h2>Past Events<h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>Sport</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Bets Placed</th>
+        <th>Bets Won</th>
+        <th>Bets Lost</th>
+        <th>Bets Pending</th>
+        <th>Balance</th>
+        <th></th>
+
+      </tr>
+      <% @list_of_events.each do |an_event| %>
+      <tr>
+        <td> <%= an_event.sport.name %> </td>
+        <td> <%= an_event.name %> </td>
+        <td> <%= an_event.name %> </td>
+        <td>Total</td>
+        <td>Won</td>
+        <td>Lost</td>
+        <td>Pending</td>
+        <td>
+          <a href="/events/<%= an_event.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
 
 <hr>
